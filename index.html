@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNO Vueltas Más — Feliz Cumple Irene</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --felt: #14151f;
+    --felt-2: #1b1d2b;
+    --cream: #f6efe0;
+    --ink: #14151f;
+    --red: #e8433d;
+    --red-dark: #b52f2b;
+    --yellow: #f4c542;
+    --yellow-dark: #c99a1e;
+    --green: #2fa84f;
+    --green-dark: #1f7838;
+    --blue: #2d6cdf;
+    --blue-dark: #1f4ea3;
+    --shadow: rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 20% -10%, #23253a 0%, transparent 45%),
+      radial-gradient(circle at 90% 10%, #241a1a 0%, transparent 40%),
+      var(--felt);
+    color:var(--cream);
+    font-family:'Nunito', sans-serif;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Baloo 2', sans-serif;
+    letter-spacing:.02em;
+  }
+
+  a{color:inherit;}
+
+  /* subtle felt texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  section{ position:relative; z-index:1; padding: 6rem 1.5rem; max-width:1100px; margin:0 auto; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding-top:3rem;
+    gap:2rem;
+  }
+
+  .wild-card{
+    width:min(78vw, 320px);
+    aspect-ratio: 2/3;
+    border-radius: 22px;
+    background: var(--cream);
+    box-shadow: 0 30px 60px var(--shadow), 0 0 0 8px rgba(246,239,224,.06);
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    animation: float 5s ease-in-out infinite;
+    transform: rotate(-4deg);
+  }
+  .wild-card .quad{
+    position:absolute; inset:14px; border-radius:14px; overflow:hidden;
+    display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+  }
+  .wild-card .quad span{display:block;}
+  .wild-card .quad span:nth-child(1){background:var(--red);}
+  .wild-card .quad span:nth-child(2){background:var(--blue);}
+  .wild-card .quad span:nth-child(3){background:var(--yellow);}
+  .wild-card .quad span:nth-child(4){background:var(--green);}
+  .wild-card .core{
+    position:relative; z-index:2;
+    width:64%; aspect-ratio:1;
+    background:var(--ink);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 6px var(--cream);
+  }
+  .wild-card .core .num{
+    font-family:'Baloo 2';
+    font-weight:800;
+    font-size: clamp(2.2rem, 8vw, 3.4rem);
+    color:var(--cream);
+    transform: rotate(-14deg);
+  }
+
+  @keyframes float{
+    0%,100%{ transform: rotate(-4deg) translateY(0); }
+    50%{ transform: rotate(-2deg) translateY(-14px); }
+  }
+
+  .hero h1{
+    font-size: clamp(2.1rem, 6vw, 3.6rem);
+    margin:0;
+    color:var(--cream);
+    line-height:1.05;
+  }
+  .hero h1 .accent{
+    color:var(--yellow);
+    display:block;
+    font-size: 1.15em;
+    text-shadow: 3px 3px 0 var(--red-dark);
+  }
+  .hero p.sub{
+    font-size:1.15rem;
+    max-width:38ch;
+    margin: 0 auto;
+    font-weight:700;
+    color:#d9d3c3;
+    font-style:italic;
+  }
+  .scroll-hint{
+    font-size:.85rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    opacity:.55;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:.3;} 50%{opacity:.75;} }
+
+  /* ---------- SECTION LABELS ---------- */
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-family:'Baloo 2'; font-weight:700;
+    color:var(--felt);
+    background:var(--yellow);
+    padding:.3rem 1rem;
+    border-radius:999px;
+    font-size:.85rem;
+    letter-spacing:.03em;
+    margin-bottom:1.2rem;
+    transform: rotate(-2deg);
+  }
+  h2.section-title{
+    font-size:clamp(1.8rem,4vw,2.6rem);
+    margin: 0 0 2rem 0;
+    color:var(--cream);
+  }
+  h2.section-title span{color:var(--red);}
+
+  /* ---------- INTRO ---------- */
+  .intro-text{
+    font-size:1.15rem;
+    line-height:1.7;
+    max-width:65ch;
+    color:#e6e0d0;
+  }
+  .intro-text strong{ color:var(--yellow); }
+
+  /* ---------- RULES (cards) ---------- */
+  .rules-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    gap:1.4rem;
+  }
+  .rule-card{
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:16px;
+    padding:1.6rem 1.4rem 1.8rem;
+    position:relative;
+    box-shadow: 0 14px 30px var(--shadow);
+    transition: transform .25s ease;
+    border-top: 10px solid var(--rc, var(--red));
+  }
+  .rule-card:hover{ transform: translateY(-8px) rotate(-1deg); }
+  .rule-card .rule-num{
+    font-family:'Baloo 2'; font-weight:800;
+    font-size:2rem;
+    color: var(--rc, var(--red));
+    line-height:1;
+    margin-bottom:.5rem;
+  }
+  .rule-card h3{ margin:.2rem 0 .5rem; font-size:1.05rem; }
+  .rule-card p{ margin:0; font-size:.95rem; line-height:1.5; color:#3a3a3a; }
+  .rule-card:nth-child(4n+1){ --rc: var(--red); }
+  .rule-card:nth-child(4n+2){ --rc: var(--blue); }
+  .rule-card:nth-child(4n+3){ --rc: var(--green-dark); }
+  .rule-card:nth-child(4n+4){ --rc: var(--yellow-dark); }
+
+  /* ---------- GALLERY ---------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:1.6rem;
+  }
+  .photo-card{
+    background:var(--cream);
+    border-radius:14px;
+    padding:10px 10px 16px;
+    box-shadow: 0 16px 34px var(--shadow);
+    transform: rotate(var(--rot,0deg));
+    transition: transform .3s ease;
+  }
+  .photo-card:nth-child(odd){ --rot:-3deg; }
+  .photo-card:nth-child(even){ --rot:2.5deg; }
+  .photo-card:hover{ transform: rotate(0deg) scale(1.04); z-index:5; }
+  .photo-card .frame{
+    width:100%; aspect-ratio: 4/5;
+    border-radius:8px;
+    overflow:hidden;
+    background:
+      repeating-linear-gradient(45deg, var(--felt-2) 0 10px, #10111a 10px 20px);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .photo-card .frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+  }
+  .photo-card .frame .fallback{
+    color:#8b8fae; text-align:center; font-size:.8rem; padding:1rem;
+    font-weight:700;
+  }
+  .photo-card figcaption{
+    color:var(--ink);
+    text-align:center;
+    font-family:'Baloo 2';
+    font-weight:700;
+    font-size:.9rem;
+    margin-top:.6rem;
+  }
+
+  /* ---------- MEMES ---------- */
+  .meme-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:1.5rem;
+  }
+  .meme-card{
+    background: var(--felt-2);
+    border-radius:14px;
+    overflow:hidden;
+    border:3px solid var(--yellow);
+    box-shadow: 0 14px 28px var(--shadow);
+  }
+  .meme-card .frame{
+    aspect-ratio:1/1;
+    background: repeating-linear-gradient(45deg, #262841 0 10px, #1b1d2b 10px 20px);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .meme-card .frame img{ width:100%; height:100%; object-fit:cover; display:block;}
+  .meme-card .frame .fallback{ color:#8b8fae; font-size:.8rem; text-align:center; padding:1rem; font-weight:700;}
+  .meme-card .cap{ padding:.7rem 1rem; font-size:.9rem; font-weight:700; color:var(--yellow); text-align:center;}
+
+  /* ---------- SPECIAL CARD 9/11 ---------- */
+  .special-wrap{ display:flex; justify-content:center; }
+  .special-card{
+    background: linear-gradient(160deg, var(--red) 0%, var(--red-dark) 100%);
+    color:var(--cream);
+    border-radius:20px;
+    padding:2.4rem 2rem;
+    max-width:560px;
+    box-shadow: 0 20px 50px var(--shadow);
+    border: 6px solid var(--cream);
+    text-align:center;
+    transform: rotate(1.5deg);
+  }
+  .special-card .draw4{
+    font-family:'Baloo 2'; font-weight:800;
+    font-size:.9rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    background:var(--cream); color:var(--red-dark);
+    display:inline-block; padding:.3rem .9rem; border-radius:999px;
+    margin-bottom:1rem;
+  }
+  .special-card p{ line-height:1.7; font-size:1.05rem; }
+  .special-card .date{
+    font-family:'Baloo 2'; font-weight:800; font-size:2.4rem;
+    margin: .3rem 0 1rem;
+  }
+
+  /* ---------- DRAW PILE (interactive) ---------- */
+  .draw-zone{
+    text-align:center;
+  }
+  .deck-area{
+    display:flex; flex-wrap:wrap; gap:2.5rem;
+    align-items:center; justify-content:center;
+    margin-top:2rem;
+  }
+  .deck{
+    position:relative;
+    width:150px; height:220px;
+    cursor:pointer;
+  }
+  .deck .back{
+    position:absolute; inset:0;
+    border-radius:16px;
+    background: linear-gradient(135deg, var(--red), var(--blue));
+    border: 5px solid var(--cream);
+    box-shadow: 0 10px 0 -2px var(--felt-2), 0 18px 34px var(--shadow);
+    display:flex; align-items:center; justify-content:center;
+    transition: transform .15s ease;
+  }
+  .deck .back:nth-child(1){ transform: rotate(-6deg) translateY(6px);}
+  .deck .back:nth-child(2){ transform: rotate(3deg) translateY(3px);}
+  .deck .back:nth-child(3){ transform: rotate(0deg); }
+  .deck .back .oval{
+    width:60%; aspect-ratio:1.5; background:var(--cream);
+    border-radius:50%; opacity:.15;
+  }
+  .deck:hover .back:nth-child(3){ transform: translateY(-8px); }
+
+  .revealed-card{
+    width:220px; min-height:280px;
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:18px;
+    padding:1.6rem 1.3rem;
+    box-shadow: 0 20px 40px var(--shadow);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    gap:.8rem;
+    animation: pop .35s ease;
+  }
+  @keyframes pop{ from{ transform: scale(.7) rotate(-8deg); opacity:0;} to{ transform:scale(1) rotate(-2deg); opacity:1;} }
+  .revealed-card .tag{
+    font-family:'Baloo 2'; font-weight:800; font-size:.75rem;
+    text-transform:uppercase; letter-spacing:.08em;
+    color:#fff; background:var(--card-color, var(--green-dark));
+    padding:.25rem .7rem; border-radius:999px;
+  }
+  .revealed-card p{ margin:0; font-weight:700; line-height:1.4; font-size:1.02rem;}
+  .draw-btn, .cheat-btn{
+    font-family:'Baloo 2'; font-weight:700;
+    border:none; cursor:pointer;
+    padding:.9rem 1.8rem;
+    border-radius:999px;
+    font-size:1rem;
+    box-shadow: 0 8px 0 rgba(0,0,0,.25);
+    transition: transform .1s ease;
+  }
+  .draw-btn{ background:var(--green); color:#fff; }
+  .draw-btn:active{ transform: translateY(4px); box-shadow:0 3px 0 rgba(0,0,0,.25); }
+  .cheat-btn{
+    background:transparent;
+    color:#8b8fae;
+    box-shadow:none;
+    text-decoration:underline dotted;
+    font-size:.85rem;
+    margin-top:1.4rem;
+  }
+  .cheat-btn:hover{ color:var(--yellow); }
+
+  #allCardsReveal{
+    display:none;
+    margin-top:2rem;
+    text-align:left;
+    background: rgba(244,197,66,.08);
+    border:2px dashed var(--yellow);
+    border-radius:14px;
+    padding:1.2rem 1.4rem;
+    max-width:640px;
+    margin-left:auto; margin-right:auto;
+  }
+  #allCardsReveal.show{ display:block; }
+  #allCardsReveal h4{ margin-top:0; color:var(--yellow); font-family:'Baloo 2';}
+  #allCardsReveal ul{ margin:0; padding-left:1.2rem; line-height:1.7; }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    text-align:center;
+    padding: 4rem 1.5rem 5rem;
+    color:#8b8fae;
+    font-size:.9rem;
+  }
+  footer .shout{
+    font-family:'Baloo 2'; font-weight:800;
+    font-size: clamp(2rem,7vw,3rem);
+    color:var(--yellow);
+    text-shadow: 3px 3px 0 var(--red-dark);
+    margin-bottom:.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wild-card">
+    <div class="quad"><span></span><span></span><span></span><span></span></div>
+    <div class="core"><span class="num">27</span></div>
+  </div>
+  <h1>
+    ¡FELIZ CUMPLEAÑOS!
+    <span class="accent">IRENE</span>
+  </h1>
+  <p class="sub">27 años y sigue robando cartas cuando nadie mira.</p>
+  <p class="scroll-hint">▼ reparte hacia abajo ▼</p>
+</section>
+
+<!-- ============ INTRO ============ -->
+<section id="intro">
+  <span class="eyebrow">🎉 la partida empieza</span>
+  <h2 class="section-title">Hoy toca <span>barajar</span> el año</h2>
+  <p class="intro-text">
+    Cada 11 de septiembre el mazo se reparte de nuevo. Este año le toca a
+    <strong>Irene</strong> ponerse la corona de la partida: la que cambia el color
+    sin avisar, la que dice "+2" y saca un +4 de la manga, la que jura que no
+    ha mirado las cartas de nadie mientras las está mirando ahora mismo.
+    Esta web es nuestro homenaje: una mano ganadora, hecha con fotos, memes
+    y todas las trampas que hemos podido reunir sobre ti.
+  </p>
+</section>
+
+<!-- ============ RULES ============ -->
+<section id="reglas">
+  <span class="eyebrow">📜 reglamento oficial</span>
+  <h2 class="section-title">Reglas de la casa <span>(edición Irene)</span></h2>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-num">01</div>
+      <h3>El "+4" es opcional</h3>
+      <p>Solo si Irene lo tiene. Si lo tiene otra persona, de repente esa carta "no vale".</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">02</div>
+      <h3>Barajar es sospechoso</h3>
+      <p>Si Irene baraja, cuenta las cartas dos veces "por si acaso". Nadie sabe por qué siempre le sale bien.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">03</div>
+      <h3>Está prohibido ganarle</h3>
+      <p>Técnicamente no está en las reglas, pero inténtalo y verás la cara que pone.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">04</div>
+      <h3>UNO se grita, no se susurra</h3>
+      <p>Salvo que sea Irene, que puede olvidarlo "sin querer" y reclamarlo dos rondas después.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">05</div>
+      <h3>Las cartas del suelo cuentan</h3>
+      <p>Si a Irene se le "cae" una carta útil, es pura casualidad. Siempre.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">06</div>
+      <h3>El cumpleaños manda</h3>
+      <p>Hoy todas las reglas anteriores se doblan a su favor. Felicidades, es tu día.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="fotos">
+  <span class="eyebrow">📸 pruebas del delito</span>
+  <h2 class="section-title">La galería <span>de la acusada</span></h2>
+  <p class="intro-text" style="margin-bottom:2rem;">
+    Sustituye estas fotos por las vuestras: guarda las imágenes en la carpeta
+    <code>images/</code> con estos mismos nombres (foto1.jpg, foto2.jpg…) y aparecerán solas.
+  </p>
+  <div class="gallery-grid">
+    <figure class="photo-card">
+      <div class="frame"><img src="images/foto1.jpg" alt="Foto 1 de Irene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">📷<br>images/foto1.jpg</div></div>
+      <figcaption>Exhibit A</figcaption>
+    </figure>
+    <figure class="photo-card">
+      <div class="frame"><img src="images/foto2.jpg" alt="Foto 2 de Irene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">📷<br>images/foto2.jpg</div></div>
+      <figcaption>Exhibit B</figcaption>
+    </figure>
+    <figure class="photo-card">
+      <div class="frame"><img src="images/foto3.jpg" alt="Foto 3 de Irene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">📷<br>images/foto3.jpg</div></div>
+      <figcaption>Exhibit C</figcaption>
+    </figure>
+    <figure class="photo-card">
+      <div class="frame"><img src="images/foto4.jpg" alt="Foto 4 de Irene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">📷<br>images/foto4.jpg</div></div>
+      <figcaption>Exhibit D</figcaption>
+    </figure>
+    <figure class="photo-card">
+      <div class="frame"><img src="images/foto5.jpg" alt="Foto 5 de Irene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">📷<br>images/foto5.jpg</div></div>
+      <figcaption>Exhibit E</figcaption>
+    </figure>
+    <figure class="photo-card">
+      <div class="frame"><img src="images/foto6.jpg" alt="Foto 6 de Irene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">📷<br>images/foto6.jpg</div></div>
+      <figcaption>Exhibit F</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ MEMES ============ -->
+<section id="memes">
+  <span class="eyebrow">😂 sala de pruebas 2</span>
+  <h2 class="section-title">Los memes <span>que sabíamos que llegarían</span></h2>
+  <p class="intro-text" style="margin-bottom:2rem;">
+    Igual que las fotos: guarda tus memes en <code>memes/</code> como meme1.jpg, meme2.jpg…
+  </p>
+  <div class="meme-grid">
+    <div class="meme-card">
+      <div class="frame"><img src="memes/meme1.jpg" alt="Meme 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">😂<br>memes/meme1.jpg</div></div>
+      <div class="cap">"cuando alguien dice que le has hecho trampas"</div>
+    </div>
+    <div class="meme-card">
+      <div class="frame"><img src="memes/meme2.jpg" alt="Meme 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">😂<br>memes/meme2.jpg</div></div>
+      <div class="cap">"yo jurando que no vi tu carta"</div>
+    </div>
+    <div class="meme-card">
+      <div class="frame"><img src="memes/meme3.jpg" alt="Meme 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">😂<br>memes/meme3.jpg</div></div>
+      <div class="cap">"la cara de Irene al repartir"</div>
+    </div>
+    <div class="meme-card">
+      <div class="frame"><img src="memes/meme4.jpg" alt="Meme 4" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">😂<br>memes/meme4.jpg</div></div>
+      <div class="cap">"evidencia irrefutable"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARTA ESPECIAL 11/09 ============ -->
+<section id="fecha">
+  <div class="special-wrap">
+    <div class="special-card">
+      <span class="draw4">carta especial</span>
+      <p>El mundo entero lleva desde 2001 dándole vueltas a lo importante que fue un 11 de septiembre.</p>
+      <div class="date">11 · 09</div>
+      <p>Nosotras lo tenemos clarísimo: ese día importa porque naciste tú. Lo demás son fechas secundarias.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DRAW PILE INTERACTIVO ============ -->
+<section id="roba" class="draw-zone">
+  <span class="eyebrow">🃏 el turno de Irene</span>
+  <h2 class="section-title">Roba una <span>carta</span></h2>
+  <p class="intro-text" style="margin:0 auto 1rem;">
+    Pulsa el mazo para robar un mensaje sorpresa. Sí, puedes robar varias veces:
+    total, tú siempre te saltas el orden de todas formas.
+  </p>
+  <div class="deck-area">
+    <div class="deck" id="deckBtn" role="button" tabindex="0" aria-label="Robar carta">
+      <div class="back"><div class="oval"></div></div>
+      <div class="back"><div class="oval"></div></div>
+      <div class="back"><div class="oval"></div></div>
+    </div>
+    <div id="cardSlot"></div>
+  </div>
+  <button class="draw-btn" id="drawAgainBtn">Robar carta 🎴</button>
+  <br>
+  <button class="cheat-btn" id="cheatBtn">¿Hacer trampa y verlas todas? (muy propio de ti)</button>
+  <div id="allCardsReveal">
+    <h4>Te pillamos haciendo trampas otra vez:</h4>
+    <ul id="allCardsList"></ul>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="shout">¡UNO!</div>
+  <p>27 años, cero remordimientos por las trampas.<br>Feliz cumpleaños, Irene. Reparte otra vez el año que viene.</p>
+</footer>
+
+<script>
+  const CARTAS = [
+    { color: "red", label: "Carta roja", texto: "Este año te mereces ganar una partida sin necesidad de hacer trampas. Aun así, hazlas." },
+    { color: "blue", label: "Carta azul", texto: "Recordatorio oficial: sí te vimos guardarte esa carta en la manga en Navidad." },
+    { color: "green", label: "Carta verde", texto: "Que este año venga cargado de +4 a tu favor y ninguno en tu contra." },
+    { color: "yellow", label: "Carta amarilla", texto: "Feliz cumpleaños a la única persona que grita '¡UNO!' y de repente saca dos cartas más." },
+    { color: "red", label: "Comodín", texto: "Cambia de color, de baraja y de edad, pero nunca cambies eso de hacer trampas con estilo." },
+    { color: "green", label: "Carta verde", texto: "27 años y sigues sin admitir ni una sola trampa. Respeto." },
+    { color: "blue", label: "+2", texto: "Te mereces el doble de tarta, el doble de regalos y el doble de rondas para hacer trampas." },
+    { color: "yellow", label: "Reversa", texto: "Si alguien te acusa de tramposa, dale la vuelta a la conversación. Es tu especialidad." }
+  ];
+
+  const colorMap = { red: "#e8433d", blue: "#2d6cdf", green: "#1f7838", yellow: "#c99a1e" };
+
+  let mazo = [...CARTAS];
+  const cardSlot = document.getElementById('cardSlot');
+  const deckBtn = document.getElementById('deckBtn');
+  const drawAgainBtn = document.getElementById('drawAgainBtn');
+  const cheatBtn = document.getElementById('cheatBtn');
+  const allReveal = document.getElementById('allCardsReveal');
+  const allList = document.getElementById('allCardsList');
+
+  function drawCard(){
+    if(mazo.length === 0){ mazo = [...CARTAS]; }
+    const idx = Math.floor(Math.random() * mazo.length);
+    const carta = mazo.splice(idx, 1)[0];
+
+    cardSlot.innerHTML = `
+      <div class="revealed-card" style="--card-color:${colorMap[carta.color]}">
+        <span class="tag">${carta.label}</span>
+        <p>${carta.texto}</p>
+      </div>
+    `;
+  }
+
+  deckBtn.addEventListener('click', drawCard);
+  deckBtn.addEventListener('keypress', (e)=>{ if(e.key === 'Enter' || e.key === ' ') drawCard(); });
+  drawAgainBtn.addEventListener('click', drawCard);
+
+  cheatBtn.addEventListener('click', () => {
+    if(allReveal.classList.contains('show')){
+      allReveal.classList.remove('show');
+      cheatBtn.textContent = "¿Hacer trampa y verlas todas? (muy propio de ti)";
+      return;
+    }
+    allList.innerHTML = CARTAS.map(c => `<li><strong>${c.label}:</strong> ${c.texto}</li>`).join('');
+    allReveal.classList.add('show');
+    cheatBtn.textContent = "Vale, ya has hecho trampas suficientes por hoy 🙄";
+  });
+</script>
+
+</body>
+</html>
