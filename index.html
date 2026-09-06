@@ -492,6 +492,38 @@
     white-space:nowrap;
   }
 
+  /* ---------- MINI-MAZO (una carta a la vez dentro de la diapositiva) ---------- */
+  .mini-deck-item{ display:none; }
+  .mini-deck-item.mini-active{ display:block; animation: dealIn .35s ease; }
+  .mini-nav{
+    display:flex; align-items:center; justify-content:center;
+    gap:1rem;
+    margin-top:1.6rem;
+  }
+  .mini-arrow{
+    font-family:'Baloo 2'; font-weight:800;
+    width:38px; height:38px;
+    border-radius:50%;
+    border: 3px solid var(--cream);
+    background:var(--felt-2);
+    color:var(--cream);
+    font-size:.95rem;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 5px 0 rgba(0,0,0,.35);
+    transition: transform .1s ease, opacity .2s ease;
+    flex:0 0 auto;
+  }
+  .mini-arrow:active{ transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.35); }
+  .mini-arrow:disabled{ opacity:.25; cursor:default; }
+  .mini-count{
+    font-family:'Baloo 2'; font-weight:700;
+    font-size:.85rem;
+    color:#8b8fae;
+    min-width:4.5rem;
+    text-align:center;
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ animation: none !important; transition: none !important; }
   }
@@ -639,7 +671,7 @@
       <span class="draw4">carta especial</span>
       <p>El mundo entero lleva desde 2001 dándole vueltas a lo importante que fue un 11 de septiembre.</p>
       <div class="date">11 · 09</div>
-      <p>Nosotros lo tenemos clarísimo: ese día importa porque naciste tú. Lo demás son fechas secundarias.</p>
+      <p>Nosotros lo teníamos claro dos años antes: desde 1999 ese día ya importaba, porque naciste tú. Lo del 2001 es la fecha secundaria.</p>
     </div>
   </div>
 </section>
@@ -735,6 +767,51 @@
     allReveal.classList.add('show');
     cheatBtn.textContent = "Vale, ya has hecho trampas suficientes por hoy 🙄";
   });
+
+  /* ---------- MINI-MAZO: reglas, fotos y memes se pasan de una en una ---------- */
+  function initMiniDeck(containerSelector, itemSelector){
+    const container = document.querySelector(containerSelector);
+    if(!container) return;
+    const items = Array.from(container.querySelectorAll(itemSelector));
+    if(items.length === 0) return;
+    items.forEach(it => it.classList.add('mini-deck-item'));
+
+    let idx = 0;
+
+    const nav = document.createElement('div');
+    nav.className = 'mini-nav';
+    const prev = document.createElement('button');
+    prev.type = 'button';
+    prev.className = 'mini-arrow';
+    prev.textContent = '◀';
+    prev.setAttribute('aria-label', 'Anterior');
+    const count = document.createElement('span');
+    count.className = 'mini-count';
+    const next = document.createElement('button');
+    next.type = 'button';
+    next.className = 'mini-arrow';
+    next.textContent = '▶';
+    next.setAttribute('aria-label', 'Siguiente');
+    nav.appendChild(prev);
+    nav.appendChild(count);
+    nav.appendChild(next);
+    container.insertAdjacentElement('afterend', nav);
+
+    function render(){
+      items.forEach((it, i) => it.classList.toggle('mini-active', i === idx));
+      count.textContent = (idx + 1) + ' / ' + items.length;
+      prev.disabled = idx === 0;
+      next.disabled = idx === items.length - 1;
+    }
+    prev.addEventListener('click', () => { if(idx > 0){ idx--; render(); } });
+    next.addEventListener('click', () => { if(idx < items.length - 1){ idx++; render(); } });
+
+    render();
+  }
+
+  initMiniDeck('.rules-grid', '.rule-card');
+  initMiniDeck('.gallery-grid', '.photo-card');
+  initMiniDeck('.meme-grid', '.meme-card');
 
   /* ---------- MODO PARTIDA: navegación entre cartas/niveles ---------- */
   (function(){
