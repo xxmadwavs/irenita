@@ -61,9 +61,9 @@
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:flex-start;
+    justify-content:center;
+    justify-content:safe center;
     text-align:center;
-    padding-top:1.4rem;
     gap:1rem;
   }
 
@@ -150,10 +150,12 @@
     letter-spacing:.03em;
     margin-bottom:1.2rem;
     transform: rotate(-2deg);
+    width:fit-content;
+    align-self:flex-start;
   }
   h2.section-title{
     font-size:clamp(1.8rem,4vw,2.6rem);
-    margin: 0 0 2rem 0;
+    margin: 0 0 1.2rem 0;
     color:var(--cream);
   }
   h2.section-title span{color:var(--red);}
@@ -182,6 +184,9 @@
     box-shadow: 0 14px 30px var(--shadow);
     transition: transform .25s ease;
     border-top: 10px solid var(--rc, var(--red));
+    max-width:480px;
+    margin:0 auto;
+    width:100%;
   }
   .rule-card:hover{ transform: translateY(-8px) rotate(-1deg); }
   .rule-card .rule-num{
@@ -211,6 +216,9 @@
     box-shadow: 0 16px 34px var(--shadow);
     transform: rotate(var(--rot,0deg));
     transition: transform .3s ease;
+    max-width:min(68vw, 210px);
+    margin:0 auto;
+    width:100%;
   }
   .photo-card:nth-child(odd){ --rot:-3deg; }
   .photo-card:nth-child(even){ --rot:2.5deg; }
@@ -252,6 +260,9 @@
     overflow:hidden;
     border:3px solid var(--yellow);
     box-shadow: 0 14px 28px var(--shadow);
+    max-width:min(72vw, 250px);
+    margin:0 auto;
+    width:100%;
   }
   .meme-card .frame{
     aspect-ratio:1/1;
@@ -293,15 +304,19 @@
   /* ---------- DRAW PILE (interactive) ---------- */
   .draw-zone{
     text-align:center;
+    align-items:center;
+  }
+  .draw-zone .eyebrow{
+    align-self:center;
   }
   .deck-area{
-    display:flex; flex-wrap:wrap; gap:2.5rem;
+    display:flex; flex-wrap:wrap; gap:1.5rem;
     align-items:center; justify-content:center;
-    margin-top:2rem;
+    margin: 0.6rem 0;
   }
   .deck{
     position:relative;
-    width:150px; height:220px;
+    width:130px; height:190px;
     cursor:pointer;
   }
   .deck .back{
@@ -345,7 +360,7 @@
   .draw-btn, .cheat-btn{
     font-family:'Baloo 2'; font-weight:700;
     border:none; cursor:pointer;
-    padding:.9rem 1.8rem;
+    padding:.85rem 1.8rem;
     border-radius:999px;
     font-size:1rem;
     box-shadow: 0 8px 0 rgba(0,0,0,.25);
@@ -359,7 +374,7 @@
     box-shadow:none;
     text-decoration:underline dotted;
     font-size:.85rem;
-    margin-top:1.4rem;
+    margin-top:.5rem;
   }
   .cheat-btn:hover{ color:var(--yellow); }
 
@@ -400,16 +415,21 @@
     display:none;
     height:100svh;
     overflow-y:auto;
-    padding-bottom: 8rem;
+    padding: 1.5rem 1.5rem calc(5.5rem + env(safe-area-inset-bottom));
+    box-sizing:border-box;
     scrollbar-width: thin;
   }
-  .slide.is-active{ display:block; }
-  .slide.hero.is-active{ display:flex; }
-  footer.slide.is-active{
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
+  .slide.is-active{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    justify-content:safe center;
+    animation: dealIn .45s ease;
   }
-  .slide.is-active{ animation: dealIn .45s ease; }
+  footer.slide.is-active{
+    align-items:center;
+    text-align:center;
+  }
   @keyframes dealIn{
     from{ opacity:0; transform: translateX(24px) rotate(2deg) scale(.98); }
     to{ opacity:1; transform: translateX(0) rotate(0) scale(1); }
@@ -499,7 +519,7 @@
   .mini-nav{
     display:flex; align-items:center; justify-content:center;
     gap:1rem;
-    margin-top:1.6rem;
+    margin-top:1rem;
   }
   .mini-arrow{
     font-family:'Baloo 2'; font-weight:800;
@@ -535,7 +555,7 @@
 
   /* ---------- CONTADOR DE TRAMPAS ---------- */
   .cheat-counter{
-    margin-top:1.4rem;
+    margin-top:0.6rem;
     display:inline-flex;
     align-items:center;
     gap:.6rem;
@@ -646,7 +666,7 @@
 <section id="fotos" class="slide" data-slide="fotos">
   <span class="eyebrow">📸 pruebas del delito</span>
   <h2 class="section-title">La galería <span>de la acusada</span></h2>
-  <p class="intro-text" style="margin-bottom:2rem;">
+  <p class="intro-text" style="margin-bottom:1rem;">
     Sustituye estas fotos por las vuestras: guarda las imágenes en la carpeta
     <code>images/</code> con estos mismos nombres (foto1.jpg, foto2.jpg…) y aparecerán solas.
   </p>
@@ -682,7 +702,7 @@
 <section id="memes" class="slide" data-slide="memes">
   <span class="eyebrow">😂 sala de pruebas 2</span>
   <h2 class="section-title">Los memes <span>que sabíamos que llegarían</span></h2>
-  <p class="intro-text" style="margin-bottom:2rem;">
+  <p class="intro-text" style="margin-bottom:1rem;">
     Igual que las fotos: guarda tus memes en <code>memes/</code> como meme1.jpg, meme2.jpg…
   </p>
   <div class="meme-grid">
@@ -721,7 +741,7 @@
 <section id="roba" class="draw-zone slide" data-slide="roba">
   <span class="eyebrow">🃏 el turno de Irene</span>
   <h2 class="section-title">Roba una <span>carta</span></h2>
-  <p class="intro-text" style="margin:0 auto 1rem;">
+  <p class="intro-text" style="margin:0 auto 0.6rem;">
     Pulsa el mazo para robar un mensaje sorpresa. Sí, puedes robar varias veces:
     total, tú siempre te saltas el orden de todas formas.
   </p>
@@ -734,12 +754,10 @@
     <div id="cardSlot"></div>
   </div>
   <button class="draw-btn" id="drawAgainBtn">Robar carta 🎴</button>
-  <br>
   <div class="cheat-counter" id="cheatCounter">
     <span class="num" id="cheatCount">0</span>
     <span id="cheatCounterLabel">cartas robadas esta partida</span>
   </div>
-  <br>
   <button class="cheat-btn" id="cheatBtn">¿Hacer trampa y verlas todas? (muy propio de ti)</button>
   <div id="allCardsReveal">
     <h4>Te pillamos haciendo trampas otra vez:</h4>
