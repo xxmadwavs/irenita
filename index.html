@@ -392,15 +392,118 @@
     margin-bottom:.5rem;
   }
 
+  /* ---------- MODO PARTIDA (slides) ---------- */
+  html.game-mode, html.game-mode body{ height:100%; overflow:hidden; }
+  .slides{ position:relative; height:100svh; }
+  .slide{
+    display:none;
+    height:100svh;
+    overflow-y:auto;
+    padding-bottom: 8rem;
+    scrollbar-width: thin;
+  }
+  .slide.is-active{ display:block; }
+  .slide.hero.is-active{ display:flex; }
+  footer.slide.is-active{
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+  }
+  .slide.is-active{ animation: dealIn .45s ease; }
+  @keyframes dealIn{
+    from{ opacity:0; transform: translateX(24px) rotate(2deg) scale(.98); }
+    to{ opacity:1; transform: translateX(0) rotate(0) scale(1); }
+  }
+
+  .play-btn{
+    font-family:'Baloo 2'; font-weight:700;
+    border:none; cursor:pointer;
+    background:var(--green); color:#fff;
+    padding:.9rem 2rem;
+    border-radius:999px;
+    font-size:1.05rem;
+    box-shadow: 0 8px 0 rgba(0,0,0,.25);
+    transition: transform .1s ease;
+  }
+  .play-btn:active{ transform: translateY(4px); box-shadow:0 3px 0 rgba(0,0,0,.25); }
+  .swipe-hint{
+    font-size:.85rem;
+    letter-spacing:.05em;
+    opacity:.5;
+    font-weight:700;
+  }
+
+  .game-nav{
+    position:fixed;
+    left:0; right:0; bottom:0;
+    z-index:20;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:1rem;
+    padding: 1rem 1.2rem calc(1rem + env(safe-area-inset-bottom));
+    background: linear-gradient(0deg, var(--felt) 55%, transparent);
+  }
+  .nav-arrow{
+    font-family:'Baloo 2'; font-weight:800;
+    width:46px; height:46px;
+    border-radius:50%;
+    border: 3px solid var(--cream);
+    background:var(--felt-2);
+    color:var(--cream);
+    font-size:1.1rem;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 6px 0 rgba(0,0,0,.35);
+    transition: transform .1s ease, opacity .2s ease;
+    flex:0 0 auto;
+  }
+  .nav-arrow:active{ transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.35); }
+  .nav-arrow:disabled{ opacity:.25; cursor:default; }
+  .nav-arrow:disabled:active{ transform:none; box-shadow: 0 6px 0 rgba(0,0,0,.35); }
+
+  .nav-dots{
+    display:flex; align-items:center; gap:.4rem;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    max-width:min(58vw, 360px);
+    padding:.2rem;
+  }
+  .nav-dots .dot{
+    flex:0 0 auto;
+    width:20px; height:26px;
+    border-radius:5px;
+    background:var(--felt-2);
+    border:2px solid rgba(246,239,224,.25);
+    cursor:pointer;
+    padding:0;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .nav-dots .dot.is-current{
+    background:var(--yellow);
+    border-color:var(--yellow);
+    transform: translateY(-4px) rotate(-4deg);
+  }
+  .nav-dots .dot.is-done{ background:var(--green-dark); border-color:var(--green-dark); }
+
+  .nav-count{
+    font-family:'Baloo 2'; font-weight:700;
+    font-size:.8rem;
+    color:#8b8fae;
+    white-space:nowrap;
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ animation: none !important; transition: none !important; }
   }
 </style>
 </head>
+
 <body>
 
+<div class="slides" id="slides">
+
 <!-- ============ HERO ============ -->
-<section class="hero">
+<section class="hero slide is-active" data-slide="hero">
   <div class="wild-card">
     <div class="quad"><span></span><span></span><span></span><span></span></div>
     <div class="core"><span class="num">27</span></div>
@@ -410,11 +513,12 @@
     <span class="accent">IRENE</span>
   </h1>
   <p class="sub">27 años y sigue robando cartas cuando nadie mira.</p>
-  <p class="scroll-hint">▼ reparte hacia abajo ▼</p>
+  <button class="play-btn" id="playBtn">Jugar ▶</button>
+  <p class="swipe-hint">usa las flechas, desliza o pulsa los botones para avanzar</p>
 </section>
 
 <!-- ============ INTRO ============ -->
-<section id="intro">
+<section id="intro" class="slide" data-slide="intro">
   <span class="eyebrow">🎉 la partida empieza</span>
   <h2 class="section-title">Hoy toca <span>barajar</span> el año</h2>
   <p class="intro-text">
@@ -428,7 +532,7 @@
 </section>
 
 <!-- ============ RULES ============ -->
-<section id="reglas">
+<section id="reglas" class="slide" data-slide="reglas">
   <span class="eyebrow">📜 reglamento oficial</span>
   <h2 class="section-title">Reglas de la casa <span>(edición Irene)</span></h2>
   <div class="rules-grid">
@@ -466,7 +570,7 @@
 </section>
 
 <!-- ============ GALLERY ============ -->
-<section id="fotos">
+<section id="fotos" class="slide" data-slide="fotos">
   <span class="eyebrow">📸 pruebas del delito</span>
   <h2 class="section-title">La galería <span>de la acusada</span></h2>
   <p class="intro-text" style="margin-bottom:2rem;">
@@ -502,7 +606,7 @@
 </section>
 
 <!-- ============ MEMES ============ -->
-<section id="memes">
+<section id="memes" class="slide" data-slide="memes">
   <span class="eyebrow">😂 sala de pruebas 2</span>
   <h2 class="section-title">Los memes <span>que sabíamos que llegarían</span></h2>
   <p class="intro-text" style="margin-bottom:2rem;">
@@ -529,19 +633,19 @@
 </section>
 
 <!-- ============ CARTA ESPECIAL 11/09 ============ -->
-<section id="fecha">
+<section id="fecha" class="slide" data-slide="fecha">
   <div class="special-wrap">
     <div class="special-card">
       <span class="draw4">carta especial</span>
       <p>El mundo entero lleva desde 2001 dándole vueltas a lo importante que fue un 11 de septiembre.</p>
       <div class="date">11 · 09</div>
-      <p>Nosotras lo tenemos clarísimo: ese día importa porque naciste tú. Lo demás son fechas secundarias.</p>
+      <p>Nosotros lo tenemos clarísimo: ese día importa porque naciste tú. Lo demás son fechas secundarias.</p>
     </div>
   </div>
 </section>
 
 <!-- ============ DRAW PILE INTERACTIVO ============ -->
-<section id="roba" class="draw-zone">
+<section id="roba" class="draw-zone slide" data-slide="roba">
   <span class="eyebrow">🃏 el turno de Irene</span>
   <h2 class="section-title">Roba una <span>carta</span></h2>
   <p class="intro-text" style="margin:0 auto 1rem;">
@@ -566,10 +670,21 @@
 </section>
 
 <!-- ============ FOOTER ============ -->
-<footer>
+<footer class="slide" data-slide="final">
   <div class="shout">¡UNO!</div>
   <p>27 años, cero remordimientos por las trampas.<br>Feliz cumpleaños, Irene. Reparte otra vez el año que viene.</p>
+  <button class="play-btn" id="restartBtn" style="margin-top:1.5rem;">Volver a repartir ↺</button>
 </footer>
+
+</div><!-- /.slides -->
+
+<!-- ============ NAVEGACIÓN DE LA PARTIDA ============ -->
+<nav class="game-nav" id="gameNav">
+  <button class="nav-arrow" id="prevBtn" aria-label="Carta anterior">◀</button>
+  <div class="nav-dots" id="navDots"></div>
+  <button class="nav-arrow" id="nextBtn" aria-label="Carta siguiente">▶</button>
+</nav>
+<div class="nav-count" id="navCount" style="position:fixed; bottom:5.4rem; left:0; right:0; text-align:center; z-index:20;"></div>
 
 <script>
   const CARTAS = [
@@ -620,6 +735,82 @@
     allReveal.classList.add('show');
     cheatBtn.textContent = "Vale, ya has hecho trampas suficientes por hoy 🙄";
   });
+
+  /* ---------- MODO PARTIDA: navegación entre cartas/niveles ---------- */
+  (function(){
+    document.documentElement.classList.add('game-mode');
+
+    const slidesEl = document.getElementById('slides');
+    const slides = Array.from(slidesEl.querySelectorAll(':scope > .slide'));
+    const dotsWrap = document.getElementById('navDots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const navCount = document.getElementById('navCount');
+    const playBtn = document.getElementById('playBtn');
+    const restartBtn = document.getElementById('restartBtn');
+
+    let current = 0;
+    let furthestSeen = 0;
+
+    slides.forEach((s, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'dot';
+      dot.setAttribute('aria-label', 'Ir a la carta ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = Array.from(dotsWrap.children);
+
+    function render(){
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
+      dots.forEach((d, i) => {
+        d.classList.toggle('is-current', i === current);
+        d.classList.toggle('is-done', i < furthestSeen && i !== current);
+      });
+      navCount.textContent = 'Carta ' + (current + 1) + ' de ' + slides.length;
+      prevBtn.disabled = current === 0;
+      nextBtn.textContent = current === slides.length - 1 ? '🔁' : '▶';
+      nextBtn.setAttribute('aria-label', current === slides.length - 1 ? 'Volver a repartir' : 'Carta siguiente');
+      slidesEl.querySelector('.slide.is-active').scrollTop = 0;
+    }
+
+    function goTo(i){
+      if(i < 0) i = 0;
+      if(i >= slides.length){
+        current = 0;
+        furthestSeen = 0;
+        render();
+        return;
+      }
+      current = i;
+      if(current > furthestSeen) furthestSeen = current;
+      render();
+    }
+
+    function next(){ goTo(current + 1); }
+    function prev(){ goTo(current - 1); }
+
+    prevBtn.addEventListener('click', prev);
+    nextBtn.addEventListener('click', next);
+    if(playBtn) playBtn.addEventListener('click', next);
+    if(restartBtn) restartBtn.addEventListener('click', () => { furthestSeen = 0; goTo(0); });
+
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowRight') next();
+      if(e.key === 'ArrowLeft') prev();
+    });
+
+    let touchStartX = null;
+    slidesEl.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX; }, { passive:true });
+    slidesEl.addEventListener('touchend', (e) => {
+      if(touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if(Math.abs(dx) > 50){ dx < 0 ? next() : prev(); }
+      touchStartX = null;
+    }, { passive:true });
+
+    render();
+  })();
 </script>
 
 </body>
