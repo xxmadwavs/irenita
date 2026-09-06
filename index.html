@@ -783,18 +783,291 @@
 <div class="nav-count" id="navCount" style="position:fixed; bottom:5.4rem; left:0; right:0; text-align:center; z-index:20;"></div>
 
 <script>
-  const CARTAS = [
-    { color: "red", label: "Carta roja", texto: "Este año te mereces ganar una partida sin necesidad de hacer trampas. Aun así, hazlas." },
-    { color: "blue", label: "Carta azul", texto: "Recordatorio oficial: sí te vimos guardarte esa carta en la manga en Navidad." },
-    { color: "green", label: "Carta verde", texto: "Que este año venga cargado de +4 a tu favor y ninguno en tu contra." },
-    { color: "yellow", label: "Carta amarilla", texto: "Feliz cumpleaños a la única persona que grita '¡UNO!' y de repente saca dos cartas más." },
-    { color: "red", label: "Comodín", texto: "Cambia de color, de baraja y de edad, pero nunca cambies eso de hacer trampas con estilo." },
-    { color: "green", label: "Carta verde", texto: "27 años y sigues sin admitir ni una sola trampa. Respeto." },
-    { color: "blue", label: "+2", texto: "Te mereces el doble de tarta, el doble de regalos y el doble de rondas para hacer trampas." },
-    { color: "yellow", label: "Reversa", texto: "Si alguien te acusa de tramposa, dale la vuelta a la conversación. Es tu especialidad." }
-  ];
+  const DEFAULT_CONTENT = {
+    "meta": {
+      "titulo_pestana": "UNO Vueltas Más — Feliz Cumple Irene"
+    },
+    "hero": {
+      "numero_edad": "27",
+      "titulo_principal": "¡FELIZ CUMPLEAÑOS!",
+      "nombre_cumpleanera": "IRENE",
+      "subtitulo": "27 años y sigue robando cartas cuando nadie mira.",
+      "boton_jugar": "Jugar ▶",
+      "pista_avanzar": "usa las flechas, desliza o pulsa los botones para avanzar"
+    },
+    "intro": {
+      "etiqueta": "🎉 la partida empieza",
+      "titulo_normal": "Hoy toca",
+      "titulo_resaltado": "barajar",
+      "titulo_resto": "el año",
+      "texto": "Cada 11 de septiembre el mazo se reparte de nuevo. Este año le toca a <strong>Irene</strong> ponerse la corona de la partida: la que cambia el color sin avisar, la que dice \"+2\" y saca un +4 de la manga, la que jura que no ha mirado las cartas de nadie mientras las está mirando ahora mismo. Esta web es nuestro homenaje: una mano ganadora, hecha con fotos, memes y todas las trampas que hemos podido reunir sobre ti."
+    },
+    "reglas": {
+      "etiqueta": "📜 reglamento oficial",
+      "titulo": "Reglas de la casa",
+      "titulo_sub": "(edición Irene)",
+      "cartas": [
+        { "numero": "01", "titulo": "El \"+4\" es opcional", "descripcion": "Solo si Irene lo tiene. Si lo tiene otra persona, de repente esa carta \"no vale\"." },
+        { "numero": "02", "titulo": "Barajar es sospechoso", "descripcion": "Si Irene baraja, cuenta las cartas dos veces \"por si acaso\". Nadie sabe por qué siempre le sale bien." },
+        { "numero": "03", "titulo": "Está prohibido ganarle", "descripcion": "Técnicamente no está en las reglas, pero inténtalo y verás la cara que pone." },
+        { "numero": "04", "titulo": "UNO se grita, no se susurra", "descripcion": "Salvo que sea Irene, que puede olvidarlo \"sin querer\" y reclamarlo dos rondas después." },
+        { "numero": "05", "titulo": "Las cartas del suelo cuentan", "descripcion": "Si a Irene se le \"cae\" una carta útil, es pura casualidad. Siempre." },
+        { "numero": "06", "titulo": "El cumpleaños manda", "descripcion": "Hoy todas las reglas anteriores se doblan a su favor. Felicidades, es tu día." }
+      ]
+    },
+    "fotos": {
+      "etiqueta": "📸 pruebas del delito",
+      "titulo": "La galería",
+      "titulo_resaltado": "de la acusada",
+      "instrucciones": "Sustituye estas fotos por las vuestras: guarda las imágenes en la carpeta images/ con estos mismos nombres (foto1.jpg, foto2.jpg…) y aparecerán solas.",
+      "galeria": [
+        { "pie": "Exhibit A", "imagen": "images/foto1.jpg", "alt": "Foto 1 de Irene" },
+        { "pie": "Exhibit B", "imagen": "images/foto2.jpg", "alt": "Foto 2 de Irene" },
+        { "pie": "Exhibit C", "imagen": "images/foto3.jpg", "alt": "Foto 3 de Irene" },
+        { "pie": "Exhibit D", "imagen": "images/foto4.jpg", "alt": "Foto 4 de Irene" },
+        { "pie": "Exhibit E", "imagen": "images/foto5.jpg", "alt": "Foto 5 de Irene" },
+        { "pie": "Exhibit F", "imagen": "images/foto6.jpg", "alt": "Foto 6 de Irene" }
+      ]
+    },
+    "memes": {
+      "etiqueta": "😂 sala de pruebas 2",
+      "titulo": "Los memes",
+      "titulo_resaltado": "que sabíamos que llegarían",
+      "instrucciones": "Igual que las fotos: guarda tus memes en memes/ como meme1.jpg, meme2.jpg…",
+      "lista": [
+        { "pie": "\"cuando alguien dice que le has hecho trampas\"", "imagen": "memes/meme1.jpg", "alt": "Meme 1" },
+        { "pie": "\"yo jurando que no vi tu carta\"", "imagen": "memes/meme2.jpg", "alt": "Meme 2" },
+        { "pie": "\"la cara de Irene al repartir\"", "imagen": "memes/meme3.jpg", "alt": "Meme 3" },
+        { "pie": "\"evidencia irrefutable\"", "imagen": "memes/meme4.jpg", "alt": "Meme 4" }
+      ]
+    },
+    "fecha_especial": {
+      "etiqueta": "carta especial",
+      "parrafo_1": "El mundo entero lleva desde 2001 dándole vueltas a lo importante que fue un 11 de septiembre.",
+      "fecha": "11 · 09",
+      "parrafo_2": "Nosotros lo teníamos claro dos años antes: desde 1999 ese día ya importaba, porque naciste tú. Lo del 2001 es la fecha secundaria."
+    },
+    "roba_carta": {
+      "etiqueta": "🃏 el turno de Irene",
+      "titulo": "Roba una",
+      "titulo_resaltado": "carta",
+      "descripcion": "Pulsa el mazo para robar un mensaje sorpresa. Sí, puedes robar varias veces: total, tú siempre te saltas el orden de todas formas.",
+      "boton_robar": "Robar carta 🎴",
+      "mensajes_contador": [
+        "cartas robadas esta partida",
+        "cartas robadas... vas cogiendo ritmo",
+        "cartas robadas, esto ya es sospechoso",
+        "cartas robadas, en cualquier mesa real ya te habrían pillado",
+        "cartas robadas. Irene, por favor.",
+        "cartas robadas. Se acabó el mazo, empezó la leyenda"
+      ],
+      "boton_trampa": "¿Hacer trampa y verlas todas? (muy propio de ti)",
+      "boton_trampa_activo": "Vale, ya has hecho trampas suficientes por hoy 🙄",
+      "titulo_todas_las_cartas": "Te pillamos haciendo trampas otra vez:",
+      "cartas": [
+        { "color": "red", "label": "Carta roja", "texto": "Este año te mereces ganar una partida sin necesidad de hacer trampas. Aun así, hazlas." },
+        { "color": "blue", "label": "Carta azul", "texto": "Recordatorio oficial: sí te vimos guardarte esa carta en la manga en Navidad." },
+        { "color": "green", "label": "Carta verde", "texto": "Que este año venga cargado de +4 a tu favor y ninguno en tu contra." },
+        { "color": "yellow", "label": "Carta amarilla", "texto": "Feliz cumpleaños a la única persona que grita '¡UNO!' y de repente saca dos cartas más." },
+        { "color": "red", "label": "Comodín", "texto": "Cambia de color, de baraja y de edad, pero nunca cambies eso de hacer trampas con estilo." },
+        { "color": "green", "label": "Carta verde", "texto": "27 años y sigues sin admitir ni una sola trampa. Respeto." },
+        { "color": "blue", "label": "+2", "texto": "Te mereces el doble de tarta, el doble de regalos y el doble de rondas para hacer trampas." },
+        { "color": "yellow", "label": "Reversa", "texto": "Si alguien te acusa de tramposa, dale la vuelta a la conversación. Es tu especialidad." }
+      ]
+    },
+    "final": {
+      "grito": "¡UNO!",
+      "texto": "27 años, cero remordimientos por las trampas.<br>Feliz cumpleaños, Irene. Reparte otra vez el año que viene.",
+      "boton_reiniciar": "Volver a repartir ↺"
+    }
+  };
 
   const colorMap = { red: "#e8433d", blue: "#2d6cdf", green: "#1f7838", yellow: "#c99a1e" };
+
+  async function cargarContenido() {
+    try {
+      const res = await fetch('content.json', { cache: 'no-cache' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      console.info('Usando DEFAULT_CONTENT (en file:// fetch se bloquea por seguridad):', e);
+      return DEFAULT_CONTENT;
+    }
+  }
+
+  function aplicarContenido(data) {
+    if (!data) return;
+
+    // Meta
+    if (data.meta && data.meta.titulo_pestana) {
+      document.title = data.meta.titulo_pestana;
+    }
+
+    // Hero
+    if (data.hero) {
+      const num = document.querySelector('.hero .wild-card .num');
+      if (num && data.hero.numero_edad) num.textContent = data.hero.numero_edad;
+
+      const h1 = document.querySelector('.hero h1');
+      if (h1 && data.hero.titulo_principal) {
+        h1.innerHTML = `${data.hero.titulo_principal} <span class="accent">${data.hero.nombre_cumpleanera || ''}</span>`;
+      }
+
+      const sub = document.querySelector('.hero p.sub');
+      if (sub && data.hero.subtitulo) sub.textContent = data.hero.subtitulo;
+
+      const play = document.getElementById('playBtn');
+      if (play && data.hero.boton_jugar) play.textContent = data.hero.boton_jugar;
+
+      const hint = document.querySelector('.hero .swipe-hint');
+      if (hint && data.hero.pista_avanzar) hint.textContent = data.hero.pista_avanzar;
+    }
+
+    // Intro
+    if (data.intro) {
+      const eyebrow = document.querySelector('#intro .eyebrow');
+      if (eyebrow && data.intro.etiqueta) eyebrow.textContent = data.intro.etiqueta;
+
+      const title = document.querySelector('#intro .section-title');
+      if (title && data.intro.titulo_normal) {
+        title.innerHTML = `${data.intro.titulo_normal} <span>${data.intro.titulo_resaltado || ''}</span> ${data.intro.titulo_resto || ''}`;
+      }
+
+      const text = document.querySelector('#intro .intro-text');
+      if (text && data.intro.texto) text.innerHTML = data.intro.texto;
+    }
+
+    // Reglas
+    if (data.reglas) {
+      const eyebrow = document.querySelector('#reglas .eyebrow');
+      if (eyebrow && data.reglas.etiqueta) eyebrow.textContent = data.reglas.etiqueta;
+
+      const title = document.querySelector('#reglas .section-title');
+      if (title && data.reglas.titulo) {
+        title.innerHTML = `${data.reglas.titulo} <span>${data.reglas.titulo_sub || ''}</span>`;
+      }
+
+      if (Array.isArray(data.reglas.cartas)) {
+        const grid = document.querySelector('.rules-grid');
+        if (grid) {
+          grid.innerHTML = data.reglas.cartas.map(c => `
+            <div class="rule-card">
+              <div class="rule-num">${c.numero}</div>
+              <h3>${c.titulo}</h3>
+              <p>${c.descripcion}</p>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    // Fotos
+    if (data.fotos) {
+      const eyebrow = document.querySelector('#fotos .eyebrow');
+      if (eyebrow && data.fotos.etiqueta) eyebrow.textContent = data.fotos.etiqueta;
+
+      const title = document.querySelector('#fotos .section-title');
+      if (title && data.fotos.titulo) {
+        title.innerHTML = `${data.fotos.titulo} <span>${data.fotos.titulo_resaltado || ''}</span>`;
+      }
+
+      const inst = document.querySelector('#fotos .intro-text');
+      if (inst && data.fotos.instrucciones) inst.innerHTML = data.fotos.instrucciones;
+
+      if (Array.isArray(data.fotos.galeria)) {
+        const grid = document.querySelector('.gallery-grid');
+        if (grid) {
+          grid.innerHTML = data.fotos.galeria.map(f => `
+            <figure class="photo-card">
+              <div class="frame"><img src="${f.imagen}" alt="${f.alt || f.pie}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">📷<br>${f.imagen}</div></div>
+              <figcaption>${f.pie}</figcaption>
+            </figure>
+          `).join('');
+        }
+      }
+    }
+
+    // Memes
+    if (data.memes) {
+      const eyebrow = document.querySelector('#memes .eyebrow');
+      if (eyebrow && data.memes.etiqueta) eyebrow.textContent = data.memes.etiqueta;
+
+      const title = document.querySelector('#memes .section-title');
+      if (title && data.memes.titulo) {
+        title.innerHTML = `${data.memes.titulo} <span>${data.memes.titulo_resaltado || ''}</span>`;
+      }
+
+      const inst = document.querySelector('#memes .intro-text');
+      if (inst && data.memes.instrucciones) inst.innerHTML = data.memes.instrucciones;
+
+      if (Array.isArray(data.memes.lista)) {
+        const grid = document.querySelector('.meme-grid');
+        if (grid) {
+          grid.innerHTML = data.memes.lista.map(m => `
+            <div class="meme-card">
+              <div class="frame"><img src="${m.imagen}" alt="${m.alt || m.pie}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="fallback" style="display:none; flex-direction:column;">😂<br>${m.imagen}</div></div>
+              <div class="cap">${m.pie}</div>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    // Fecha Especial
+    if (data.fecha_especial) {
+      const badge = document.querySelector('#fecha .draw4');
+      if (badge && data.fecha_especial.etiqueta) badge.textContent = data.fecha_especial.etiqueta;
+
+      const p1 = document.querySelector('#fecha .special-card p:first-of-type');
+      if (p1 && data.fecha_especial.parrafo_1) p1.textContent = data.fecha_especial.parrafo_1;
+
+      const date = document.querySelector('#fecha .date');
+      if (date && data.fecha_especial.fecha) date.textContent = data.fecha_especial.fecha;
+
+      const p2 = document.querySelector('#fecha .special-card p:last-of-type');
+      if (p2 && data.fecha_especial.parrafo_2) p2.textContent = data.fecha_especial.parrafo_2;
+    }
+
+    // Roba Carta
+    if (data.roba_carta) {
+      const eyebrow = document.querySelector('#roba .eyebrow');
+      if (eyebrow && data.roba_carta.etiqueta) eyebrow.textContent = data.roba_carta.etiqueta;
+
+      const title = document.querySelector('#roba .section-title');
+      if (title && data.roba_carta.titulo) {
+        title.innerHTML = `${data.roba_carta.titulo} <span>${data.roba_carta.titulo_resaltado || ''}</span>`;
+      }
+
+      const desc = document.querySelector('#roba .intro-text');
+      if (desc && data.roba_carta.descripcion) desc.textContent = data.roba_carta.descripcion;
+
+      const drawBtn = document.getElementById('drawAgainBtn');
+      if (drawBtn && data.roba_carta.boton_robar) drawBtn.textContent = data.roba_carta.boton_robar;
+
+      const cheatLabel = document.getElementById('cheatCounterLabel');
+      if (cheatLabel && Array.isArray(data.roba_carta.mensajes_contador) && data.roba_carta.mensajes_contador.length > 0) {
+        cheatLabel.textContent = data.roba_carta.mensajes_contador[0];
+      }
+
+      const cheatBtn = document.getElementById('cheatBtn');
+      if (cheatBtn && data.roba_carta.boton_trampa) cheatBtn.textContent = data.roba_carta.boton_trampa;
+
+      const allTitle = document.querySelector('#allCardsReveal h4');
+      if (allTitle && data.roba_carta.titulo_todas_las_cartas) allTitle.textContent = data.roba_carta.titulo_todas_las_cartas;
+    }
+
+    // Final / Footer
+    if (data.final) {
+      const shout = document.querySelector('footer .shout');
+      if (shout && data.final.grito) shout.textContent = data.final.grito;
+
+      const text = document.querySelector('footer p');
+      if (text && data.final.texto) text.innerHTML = data.final.texto;
+
+      const restart = document.getElementById('restartBtn');
+      if (restart && data.final.boton_reiniciar) restart.textContent = data.final.boton_reiniciar;
+    }
+  }
 
   /* ---------- MOTOR DE CONFETI ---------- */
   const confettiCanvas = document.getElementById('confettiCanvas');
@@ -864,71 +1137,6 @@
     }
   }
 
-  /* ---------- CONTADOR DE CARTAS ROBADAS ---------- */
-  const cheatCounterEl = document.getElementById('cheatCounter');
-  const cheatCountEl = document.getElementById('cheatCount');
-  const cheatCounterLabelEl = document.getElementById('cheatCounterLabel');
-  let drawCount = 0;
-  const counterMessages = [
-    "cartas robadas esta partida",
-    "cartas robadas... vas cogiendo ritmo",
-    "cartas robadas, esto ya es sospechoso",
-    "cartas robadas, en cualquier mesa real ya te habrían pillado",
-    "cartas robadas. Irene, por favor.",
-    "cartas robadas. Se acabó el mazo, empezó la leyenda"
-  ];
-  function bumpCounter(){
-    drawCount++;
-    cheatCountEl.textContent = drawCount;
-    const tier = Math.min(drawCount - 1, counterMessages.length - 1);
-    cheatCounterLabelEl.textContent = counterMessages[tier];
-    cheatCounterEl.classList.remove('bump');
-    void cheatCounterEl.offsetWidth;
-    cheatCounterEl.classList.add('bump');
-  }
-
-  let mazo = [...CARTAS];
-  const cardSlot = document.getElementById('cardSlot');
-  const deckBtn = document.getElementById('deckBtn');
-  const drawAgainBtn = document.getElementById('drawAgainBtn');
-  const cheatBtn = document.getElementById('cheatBtn');
-  const allReveal = document.getElementById('allCardsReveal');
-  const allList = document.getElementById('allCardsList');
-
-  function drawCard(e){
-    if(mazo.length === 0){ mazo = [...CARTAS]; }
-    const idx = Math.floor(Math.random() * mazo.length);
-    const carta = mazo.splice(idx, 1)[0];
-
-    cardSlot.innerHTML = `
-      <div class="revealed-card" style="--card-color:${colorMap[carta.color]}">
-        <span class="tag">${carta.label}</span>
-        <p>${carta.texto}</p>
-      </div>
-    `;
-
-    const originX = e && e.clientX ? e.clientX : undefined;
-    const originY = e && e.clientY ? e.clientY : undefined;
-    burstConfetti(originX, originY);
-    bumpCounter();
-  }
-
-  deckBtn.addEventListener('click', drawCard);
-  deckBtn.addEventListener('keypress', (e)=>{ if(e.key === 'Enter' || e.key === ' ') drawCard(e); });
-  drawAgainBtn.addEventListener('click', drawCard);
-
-  cheatBtn.addEventListener('click', (e) => {
-    if(allReveal.classList.contains('show')){
-      allReveal.classList.remove('show');
-      cheatBtn.textContent = "¿Hacer trampa y verlas todas? (muy propio de ti)";
-      return;
-    }
-    allList.innerHTML = CARTAS.map(c => `<li><strong>${c.label}:</strong> ${c.texto}</li>`).join('');
-    allReveal.classList.add('show');
-    cheatBtn.textContent = "Vale, ya has hecho trampas suficientes por hoy 🙄";
-    burstConfetti(e.clientX, e.clientY, 90);
-  });
-
   /* ---------- MINI-MAZO: reglas, fotos y memes se pasan de una en una ---------- */
   function initMiniDeck(containerSelector, itemSelector){
     const container = document.querySelector(containerSelector);
@@ -970,12 +1178,81 @@
     render();
   }
 
-  initMiniDeck('.rules-grid', '.rule-card');
-  initMiniDeck('.gallery-grid', '.photo-card');
-  initMiniDeck('.meme-grid', '.meme-card');
+  /* ---------- INICIALIZACIÓN GLOBAL ---------- */
+  async function iniciarWeb(){
+    const data = await cargarContenido();
+    aplicarContenido(data);
 
-  /* ---------- MODO PARTIDA: navegación entre cartas/niveles ---------- */
-  (function(){
+    // Mini-mazos
+    initMiniDeck('.rules-grid', '.rule-card');
+    initMiniDeck('.gallery-grid', '.photo-card');
+    initMiniDeck('.meme-grid', '.meme-card');
+
+    // Mazo interactivo y contador
+    const robaData = (data && data.roba_carta) || DEFAULT_CONTENT.roba_carta;
+    const CARTAS = (robaData && robaData.cartas) || DEFAULT_CONTENT.roba_carta.cartas;
+    const counterMessages = (robaData && robaData.mensajes_contador) || DEFAULT_CONTENT.roba_carta.mensajes_contador;
+    const txtTrampaNormal = (robaData && robaData.boton_trampa) || "¿Hacer trampa y verlas todas? (muy propio de ti)";
+    const txtTrampaActivo = (robaData && robaData.boton_trampa_activo) || "Vale, ya has hecho trampas suficientes por hoy 🙄";
+
+    let mazo = [...CARTAS];
+    let drawCount = 0;
+
+    const cheatCounterEl = document.getElementById('cheatCounter');
+    const cheatCountEl = document.getElementById('cheatCount');
+    const cheatCounterLabelEl = document.getElementById('cheatCounterLabel');
+    const cardSlot = document.getElementById('cardSlot');
+    const deckBtn = document.getElementById('deckBtn');
+    const drawAgainBtn = document.getElementById('drawAgainBtn');
+    const cheatBtn = document.getElementById('cheatBtn');
+    const allReveal = document.getElementById('allCardsReveal');
+    const allList = document.getElementById('allCardsList');
+
+    function bumpCounter(){
+      drawCount++;
+      cheatCountEl.textContent = drawCount;
+      const tier = Math.min(drawCount - 1, counterMessages.length - 1);
+      cheatCounterLabelEl.textContent = counterMessages[tier];
+      cheatCounterEl.classList.remove('bump');
+      void cheatCounterEl.offsetWidth;
+      cheatCounterEl.classList.add('bump');
+    }
+
+    function drawCard(e){
+      if(mazo.length === 0){ mazo = [...CARTAS]; }
+      const idx = Math.floor(Math.random() * mazo.length);
+      const carta = mazo.splice(idx, 1)[0];
+
+      cardSlot.innerHTML = `
+        <div class="revealed-card" style="--card-color:${colorMap[carta.color] || '#1f7838'}">
+          <span class="tag">${carta.label}</span>
+          <p>${carta.texto}</p>
+        </div>
+      `;
+
+      const originX = e && e.clientX ? e.clientX : undefined;
+      const originY = e && e.clientY ? e.clientY : undefined;
+      burstConfetti(originX, originY);
+      bumpCounter();
+    }
+
+    deckBtn.addEventListener('click', drawCard);
+    deckBtn.addEventListener('keypress', (e)=>{ if(e.key === 'Enter' || e.key === ' ') drawCard(e); });
+    drawAgainBtn.addEventListener('click', drawCard);
+
+    cheatBtn.addEventListener('click', (e) => {
+      if(allReveal.classList.contains('show')){
+        allReveal.classList.remove('show');
+        cheatBtn.textContent = txtTrampaNormal;
+        return;
+      }
+      allList.innerHTML = CARTAS.map(c => `<li><strong>${c.label}:</strong> ${c.texto}</li>`).join('');
+      allReveal.classList.add('show');
+      cheatBtn.textContent = txtTrampaActivo;
+      burstConfetti(e.clientX, e.clientY, 90);
+    });
+
+    // Modo partida: slides
     document.documentElement.classList.add('game-mode');
 
     const slidesEl = document.getElementById('slides');
@@ -1052,7 +1329,9 @@
     }, { passive:true });
 
     render();
-  })();
+  }
+
+  iniciarWeb();
 </script>
 
 </body>
