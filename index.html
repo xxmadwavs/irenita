@@ -525,6 +525,44 @@
     text-align:center;
   }
 
+  /* ---------- CONFETI ---------- */
+  #confettiCanvas{
+    position:fixed; inset:0;
+    width:100vw; height:100vh;
+    pointer-events:none;
+    z-index:9999;
+  }
+
+  /* ---------- CONTADOR DE TRAMPAS ---------- */
+  .cheat-counter{
+    margin-top:1.4rem;
+    display:inline-flex;
+    align-items:center;
+    gap:.6rem;
+    background: rgba(244,197,66,.1);
+    border:2px dashed var(--yellow);
+    border-radius:999px;
+    padding:.5rem 1.2rem;
+    font-family:'Baloo 2';
+    font-weight:700;
+    font-size:.85rem;
+    color:var(--yellow);
+    transition: transform .2s ease;
+  }
+  .cheat-counter.bump{ animation: counterBump .4s ease; }
+  @keyframes counterBump{
+    0%{ transform: scale(1); }
+    40%{ transform: scale(1.18) rotate(-3deg); }
+    100%{ transform: scale(1); }
+  }
+  .cheat-counter .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:1.6em; height:1.6em;
+    background:var(--yellow); color:var(--felt);
+    border-radius:50%;
+    font-size:1rem;
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{ animation: none !important; transition: none !important; }
   }
@@ -532,6 +570,8 @@
 </head>
 
 <body>
+
+<canvas id="confettiCanvas"></canvas>
 
 <div class="slides" id="slides">
 
@@ -695,6 +735,11 @@
   </div>
   <button class="draw-btn" id="drawAgainBtn">Robar carta 🎴</button>
   <br>
+  <div class="cheat-counter" id="cheatCounter">
+    <span class="num" id="cheatCount">0</span>
+    <span id="cheatCounterLabel">cartas robadas esta partida</span>
+  </div>
+  <br>
   <button class="cheat-btn" id="cheatBtn">¿Hacer trampa y verlas todas? (muy propio de ti)</button>
   <div id="allCardsReveal">
     <h4>Te pillamos haciendo trampas otra vez:</h4>
@@ -733,6 +778,97 @@
 
   const colorMap = { red: "#e8433d", blue: "#2d6cdf", green: "#1f7838", yellow: "#c99a1e" };
 
+  /* ---------- MOTOR DE CONFETI ---------- */
+  const confettiCanvas = document.getElementById('confettiCanvas');
+  const confettiCtx = confettiCanvas.getContext('2d');
+  const confettiColors = ['#e8433d', '#2d6cdf', '#f4c542', '#2fa84f', '#f6efe0'];
+  let confettiParticles = [];
+  let confettiRunning = false;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resizeConfettiCanvas(){
+    confettiCanvas.width = window.innerWidth;
+    confettiCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeConfettiCanvas);
+  resizeConfettiCanvas();
+
+  function burstConfetti(originX, originY, amount = 60){
+    if(reduceMotion) return;
+    const cx = originX ?? window.innerWidth / 2;
+    const cy = originY ?? window.innerHeight * 0.35;
+    for(let i = 0; i < amount; i++){
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 3 + Math.random() * 7;
+      confettiParticles.push({
+        x: cx,
+        y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 4,
+        w: 6 + Math.random() * 6,
+        h: 8 + Math.random() * 8,
+        rot: Math.random() * 360,
+        vrot: (Math.random() - 0.5) * 18,
+        color: confettiColors[Math.floor(Math.random() * confettiColors.length)],
+        life: 0,
+        maxLife: 70 + Math.random() * 40
+      });
+    }
+    if(!confettiRunning){
+      confettiRunning = true;
+      requestAnimationFrame(animateConfetti);
+    }
+  }
+
+  function animateConfetti(){
+    confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    confettiParticles.forEach(p => {
+      p.life++;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.18;
+      p.rot += p.vrot;
+      const fade = Math.max(0, 1 - p.life / p.maxLife);
+      confettiCtx.save();
+      confettiCtx.globalAlpha = fade;
+      confettiCtx.translate(p.x, p.y);
+      confettiCtx.rotate((p.rot * Math.PI) / 180);
+      confettiCtx.fillStyle = p.color;
+      confettiCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      confettiCtx.restore();
+    });
+    confettiParticles = confettiParticles.filter(p => p.life < p.maxLife);
+    if(confettiParticles.length > 0){
+      requestAnimationFrame(animateConfetti);
+    } else {
+      confettiRunning = false;
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }
+  }
+
+  /* ---------- CONTADOR DE CARTAS ROBADAS ---------- */
+  const cheatCounterEl = document.getElementById('cheatCounter');
+  const cheatCountEl = document.getElementById('cheatCount');
+  const cheatCounterLabelEl = document.getElementById('cheatCounterLabel');
+  let drawCount = 0;
+  const counterMessages = [
+    "cartas robadas esta partida",
+    "cartas robadas... vas cogiendo ritmo",
+    "cartas robadas, esto ya es sospechoso",
+    "cartas robadas, en cualquier mesa real ya te habrían pillado",
+    "cartas robadas. Irene, por favor.",
+    "cartas robadas. Se acabó el mazo, empezó la leyenda"
+  ];
+  function bumpCounter(){
+    drawCount++;
+    cheatCountEl.textContent = drawCount;
+    const tier = Math.min(drawCount - 1, counterMessages.length - 1);
+    cheatCounterLabelEl.textContent = counterMessages[tier];
+    cheatCounterEl.classList.remove('bump');
+    void cheatCounterEl.offsetWidth;
+    cheatCounterEl.classList.add('bump');
+  }
+
   let mazo = [...CARTAS];
   const cardSlot = document.getElementById('cardSlot');
   const deckBtn = document.getElementById('deckBtn');
@@ -741,7 +877,7 @@
   const allReveal = document.getElementById('allCardsReveal');
   const allList = document.getElementById('allCardsList');
 
-  function drawCard(){
+  function drawCard(e){
     if(mazo.length === 0){ mazo = [...CARTAS]; }
     const idx = Math.floor(Math.random() * mazo.length);
     const carta = mazo.splice(idx, 1)[0];
@@ -752,13 +888,18 @@
         <p>${carta.texto}</p>
       </div>
     `;
+
+    const originX = e && e.clientX ? e.clientX : undefined;
+    const originY = e && e.clientY ? e.clientY : undefined;
+    burstConfetti(originX, originY);
+    bumpCounter();
   }
 
   deckBtn.addEventListener('click', drawCard);
-  deckBtn.addEventListener('keypress', (e)=>{ if(e.key === 'Enter' || e.key === ' ') drawCard(); });
+  deckBtn.addEventListener('keypress', (e)=>{ if(e.key === 'Enter' || e.key === ' ') drawCard(e); });
   drawAgainBtn.addEventListener('click', drawCard);
 
-  cheatBtn.addEventListener('click', () => {
+  cheatBtn.addEventListener('click', (e) => {
     if(allReveal.classList.contains('show')){
       allReveal.classList.remove('show');
       cheatBtn.textContent = "¿Hacer trampa y verlas todas? (muy propio de ti)";
@@ -767,6 +908,7 @@
     allList.innerHTML = CARTAS.map(c => `<li><strong>${c.label}:</strong> ${c.texto}</li>`).join('');
     allReveal.classList.add('show');
     cheatBtn.textContent = "Vale, ya has hecho trampas suficientes por hoy 🙄";
+    burstConfetti(e.clientX, e.clientY, 90);
   });
 
   /* ---------- MINI-MAZO: reglas, fotos y memes se pasan de una en una ---------- */
@@ -840,6 +982,7 @@
     const dots = Array.from(dotsWrap.children);
 
     function render(){
+      const wasLast = current === slides.length - 1;
       slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
       dots.forEach((d, i) => {
         d.classList.toggle('is-current', i === current);
@@ -850,6 +993,9 @@
       nextBtn.textContent = current === slides.length - 1 ? '🔁' : '▶';
       nextBtn.setAttribute('aria-label', current === slides.length - 1 ? 'Volver a repartir' : 'Carta siguiente');
       slidesEl.querySelector('.slide.is-active').scrollTop = 0;
+      if(wasLast === false && current === slides.length - 1){
+        setTimeout(() => burstConfetti(window.innerWidth / 2, window.innerHeight * 0.25, 110), 200);
+      }
     }
 
     function goTo(i){
