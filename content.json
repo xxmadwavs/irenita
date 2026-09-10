@@ -60,12 +60,42 @@
     "titulo_resaltado": "de la acusada",
     "instrucciones": "",
     "galeria": [
-      { "pie": "Exhibit A", "imagen": "images/foto1.jpg", "alt": "Foto 1 de Irene" },
-      { "pie": "Exhibit B", "imagen": "images/foto2.jpg", "alt": "Foto 2 de Irene" },
-      { "pie": "Exhibit C", "imagen": "images/foto3.jpg", "alt": "Foto 3 de Irene" },
-      { "pie": "Exhibit D", "imagen": "images/foto4.jpg", "alt": "Foto 4 de Irene" },
-      { "pie": "Exhibit E", "imagen": "images/foto5.jpg", "alt": "Foto 5 de Irene" },
-      { "pie": "Exhibit F", "imagen": "images/foto6.jpg", "alt": "Foto 6 de Irene" }
+      {
+        "pie": "Exhibit A",
+        "texto": "UNA MONEDITA HERMANO",
+        "imagen": "images/fotografa_suelo.jpg",
+        "alt": "Irene fotógrafa en el suelo"
+      },
+      {
+        "pie": "Exhibit B",
+        "texto": "IRENE Y DRILO FOREVER",
+        "imagen": "images/marioneta_rana.jpg",
+        "alt": "Irene con marioneta de rana"
+      },
+      {
+        "pie": "Exhibit C",
+        "texto": "Disfrutando de un paseo tranquilo entre los pinos.",
+        "imagen": "images/paseo_pinos.jpg",
+        "alt": "Paseo entre los pinos"
+      },
+      {
+        "pie": "Exhibit D",
+        "texto": "POV: ERES LA CARTA DE UNO QUE IRENE TIENE EN EL SUELO DESDE EL PRINCIPIO DE LA PARTIDA",
+        "imagen": "images/grupo_contrapicado.jpg",
+        "alt": "Perspectiva contrapicada del grupo"
+      },
+      {
+        "pie": "Exhibit E",
+        "texto": "IRENE Y LAMINE YAMAL",
+        "imagen": "images/tarde_deportes.jpg",
+        "alt": "Foto de tarde deportiva"
+      },
+      {
+        "pie": "Exhibit F",
+        "texto": "COVID VIBES",
+        "imagen": "images/cerezos_flor.jpg",
+        "alt": "Paseo entre los cerezos en flor"
+      }
     ]
   },
   "memes": {
@@ -74,10 +104,26 @@
     "titulo_resaltado": "que sabíamos que llegarían",
     "instrucciones": "",
     "lista": [
-      { "pie": "\"cuando alguien dice que le has hecho trampas\"", "imagen": "memes/meme1.jpg", "alt": "Meme 1" },
-      { "pie": "\"yo jurando que no vi tu carta\"", "imagen": "memes/meme2.jpg", "alt": "Meme 2" },
-      { "pie": "\"la cara de Irene al repartir\"", "imagen": "memes/meme3.jpg", "alt": "Meme 3" },
-      { "pie": "\"evidencia irrefutable\"", "imagen": "memes/meme4.jpg", "alt": "Meme 4" }
+      {
+        "pie": "\"LA MEJOR MERIENDA\"",
+        "imagen": "images/terraza_editada.jpg",
+        "alt": "Irene en la terraza"
+      },
+      {
+        "pie": "\"mandarina\"",
+        "imagen": "images/mandarina.png",
+        "alt": "Mandarina"
+      },
+      {
+        "pie": "\"IRENE DESPUES DE COMERSE UNA MANDARINA\"",
+        "imagen": "images/autobus_pulgar.jpeg",
+        "alt": "Irene con pulgar arriba y sonrisa pícara"
+      },
+      {
+        "pie": "\"LOS IDOLOS SON PARA SIEMPRE\"",
+        "imagen": "images/saludo_nadal.jpg",
+        "alt": "Irene haciendo la venia en la Avenida Rafael Nadal"
+      }
     ]
   },
   "fecha_especial": {
@@ -104,13 +150,41 @@
     "boton_trampa_activo": "Vale, ya has hecho trampas suficientes por hoy 🙄",
     "titulo_todas_las_cartas": "Te pillamos haciendo trampas otra vez:",
     "cartas": [
-      { "color": "red", "label": "Carta roja", "texto": "Este año te mereces ganar una partida sin necesidad de hacer trampas. Aun así, hazlas." },
-      { "color": "blue", "label": "Carta azul", "texto": "Recordatorio oficial: sí te vimos guardarte esa carta." },
-      { "color": "green", "label": "Carta verde", "texto": "Que este año venga cargado de +4 a tu favor y ninguno en tu contra." },
-      { "color": "yellow", "label": "Carta amarilla", "texto": "Feliz cumpleaños a la única persona que saca 3 cartas... A LA VEZ" },
-      { "color": "red", "label": "Comodín", "texto": "Cambia de color, de baraja y de edad, pero nunca cambies eso de hacer trampas con estilo." },
-      { "color": "green", "label": "Carta verde", "texto": "27 años y sigues sin admitir ni una sola trampa. RESPETO EHH" },
-      { "color": "yellow", "label": "Reversa", "texto": "Si alguien te acusa de tramposa, dale la vuelta a la conversación. Es tu especialidad." }
+      {
+        "color": "red",
+        "label": "Carta roja",
+        "texto": "Este año te mereces ganar una partida sin necesidad de hacer trampas. Aun así, hazlas."
+      },
+      {
+        "color": "blue",
+        "label": "Carta azul",
+        "texto": "Recordatorio oficial: sí te vimos guardarte esa carta."
+      },
+      {
+        "color": "green",
+        "label": "Carta verde",
+        "texto": "Que este año venga cargado de +4 a tu favor y ninguno en tu contra."
+      },
+      {
+        "color": "yellow",
+        "label": "Carta amarilla",
+        "texto": "Feliz cumpleaños a la única persona que saca 3 cartas... A LA VEZ"
+      },
+      {
+        "color": "red",
+        "label": "Comodín",
+        "texto": "Cambia de color, de baraja y de edad, pero nunca cambies eso de hacer trampas con estilo."
+      },
+      {
+        "color": "green",
+        "label": "Carta verde",
+        "texto": "27 años y sigues sin admitir ni una sola trampa. RESPETO EHH"
+      },
+      {
+        "color": "yellow",
+        "label": "Reversa",
+        "texto": "Si alguien te acusa de tramposa, dale la vuelta a la conversación. Es tu especialidad."
+      }
     ]
   },
   "final": {
